@@ -11,14 +11,7 @@ MuJoCo + JAX based dog locomotion playground for training, ONNX export, and loca
 - `playground/common/`: shared training, export, reward, and utility code
 - `playground/dog_m/xmls/`: robot and scene assets
 - `models/best.onnx`: bundled ready-to-run ONNX policy
-- `videos/`: reserved folder for demo videos
 
-## Current scope
-
-- Supported task: `flat_terrain`
-- Training exports the latest ONNX policy into `outputs/`
-- A reference ONNX policy is included at `models/best.onnx`
-- This repository no longer keeps training-state snapshots in-tree
 
 ## Reference environment
 
@@ -70,44 +63,25 @@ The current `dog_m` environment is a CUDA 12 GPU environment because it uses:
 
 If you want a CPU-only environment, replace those two packages with a CPU-compatible JAX install before running the project.
 
-## Quick start
-
-### Show training CLI help
+## Quick start Train and export ONNX
 
 ```bash
-python playground/dog_m/runner.py --help
+python playground/dog_m/runner.py 
 ```
-
-### Train and export ONNX
-
-```bash
-python playground/dog_m/runner.py \
-  --task flat_terrain \
-  --output_dir outputs \
-  --num_timesteps 30000000
-```
-
-Notes:
-
-- ONNX export is written to `outputs/`
-- only the latest timestamped ONNX file is kept by the runner
 
 ### Run the exported policy in MuJoCo
 
 ```bash
 python playground/dog_m/mujoco_infer.py \
-  -o outputs/<your_policy>.onnx \
-  --model_path playground/dog_m/xmls/scene_flat_terrain.xml
+  -o outputs/<your_policy>.onnx 
 ```
 
 ### Run the bundled ONNX directly
 
 ```bash
 python playground/dog_m/mujoco_infer.py \
-  -o models/best.onnx \
-  --model_path playground/dog_m/xmls/scene_flat_terrain.xml
+  -o models/best.onnx 
 ```
-
 
 Use this command if you want to verify the repository immediately without training first.
 
@@ -118,7 +92,22 @@ Keyboard controls in the inference viewer:
 - `A` / `E`: yaw command
 
 ## Demo videos
-#######
+
+<div align="center">
+
+  <video src="https://github.com/user-attachments/assets/cafc08f6-3ca6-4018-8375-37cb2e9bd252" 
+         controls 
+         width="80%">
+  </video>
+
+  <p><b>Full-stack Embodied AI Quadruped Robot Demo</b></p>
+  <p>
+    A low-cost open-source quadruped robot pipeline covering mechanical design,
+    simulation, reinforcement learning, IK control, and deployment.
+  </p>
+
+</div>
+
 
 ### IMU axis probe
 
@@ -129,58 +118,3 @@ python playground/dog_m/imu_axis_probe.py \
 
 This tool helps verify roll, pitch, yaw, gyro, and accelerometer conventions.
 
-
-
-## Repository layout
-
-```text
-Dog_Playground/
-├── LICENSE
-├── models/
-│   └── best.onnx
-├── pyproject.toml
-├── playground/
-│   ├── common/
-│   └── dog_m/
-│       ├── base.py
-│       ├── constants.py
-│       ├── imu_axis_probe.py
-│       ├── joystick.py
-│       ├── mujoco_infer.py
-│       ├── mujoco_infer_base.py
-│       ├── runner.py
-│       └── xmls/
-├── videos/
-│   └── README.md
-├── environment.yml
-├── requirements.txt
-└── README.md
-```
-
-## Common issues
-
-### `ModuleNotFoundError: No module named 'jax'`
-
-Install the pinned `dog_m` environment first, then reinstall the remaining dependencies:
-
-```bash
-conda env create -f environment.yml
-conda activate dog_m
-```
-
-### `ModuleNotFoundError: No module named 'mujoco'`
-
-```bash
-pip install mujoco
-```
-
-### Viewer does not open
-
-- Make sure you are on a machine with a working desktop/OpenGL setup
-- If you are on a remote machine, verify X11 forwarding or your display configuration
-
-## Notes for open-source cleanup
-
-- generated caches and exports should stay out of version control
-- `.gitignore` already ignores `outputs/`, `.tmp/`, `__pycache__/`, TensorBoard logs, and temporary observation dumps
-- the repository is released under the MIT license in `LICENSE`
