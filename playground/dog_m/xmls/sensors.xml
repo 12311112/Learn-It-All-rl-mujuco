@@ -1,0 +1,23 @@
+<sensor>
+    <gyro site="imu" name="gyro"/>
+    <velocimeter site="imu" name="local_linvel"/>
+    <accelerometer site="imu" name="accelerometer"/>
+    <framezaxis objtype="site" objname="imu" name="upvector"/>
+    <framexaxis objtype="site" objname="imu" name="forwardvector"/>
+    <framelinvel objtype="site" objname="imu" name="global_linvel"/>
+    <frameangvel objtype="site" objname="imu" name="global_angvel"/>
+    <framepos objtype="site" objname="imu" name="position"/>
+    <framequat objtype="site" objname="imu" name="orientation"/>
+    <framelinvel objtype="site" objname="FR_foot" name="FR_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="FL_foot" name="FL_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="RR_foot" name="RR_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="RL_foot" name="RL_foot_global_linvel"/>
+    <framexaxis objtype="site" objname="FL_foot" name="FL_foot_upvector"/>
+    <framexaxis objtype="site" objname="FR_foot" name="FR_foot_upvector"/>
+    <framexaxis objtype="site" objname="RR_foot" name="RR_foot_upvector"/>
+    <framexaxis objtype="site" objname="RL_foot" name="RL_foot_upvector"/>
+    <framepos objtype="site" objname="FL_foot" name="FL_foot_pos"/>
+    <framepos objtype="site" objname="FR_foot" name="FR_foot_pos"/>
+    <framepos objtype="site" objname="RR_foot" name="RR_foot_pos"/>
+    <framepos objtype="site" objname="RL_foot" name="RL_foot_pos"/>
+</sensor>

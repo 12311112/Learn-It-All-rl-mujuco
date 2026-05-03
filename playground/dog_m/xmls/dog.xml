@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<mujoco model="dog_m">
+  <compiler angle="radian" meshdir="assets"/>
+
+  <option iterations="1" ls_iterations="5">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <default>
+    <default class="dog">
+      <joint frictionloss="0.1" armature="0.005"/>
+      <position kp="50" dampratio="1"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+    </default>
+  </default>
+
+  <default>
+    <default class="sts3215">
+      <geom contype="0" conaffinity="0"/>
+      <joint damping="0.56" frictionloss="0.068" armature="0.027"/>
+      <position kp="13.37" kv="0.0" forcerange="-3.23 3.23"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <body name="base" pos="0 0 0.22">
+      <freejoint name="floating_base"/>
+      <site name="imu" pos="-0.08 -0.0 0.05"/>
+
+      <body name="trunk" childclass="dog">
+        <inertial pos="-0.0000265 0 0.0055159" mass="1.1320046"
+          fullinertia="0.0014531 0.0060976 0.0071152 -0.0000092 -0.0000001 0"/>
+        <geom class="visual" mesh="trunk" material="trunk_material"/>
+        <geom class="collision" type="box" pos="0 0 0.01" size="0.1325 0.05475 0.035"/>
+
+        <body name="FR_hip" pos="0.1305 -0.03923 0.019">
+          <joint name="FR_hip_joint" axis="1 0 0" range="-0.802851455917 0.802851455917" class="sts3215"/>
+          <inertial pos="-0.0267598 -0.0023151 -0.0094611" mass="0.0843956"
+            fullinertia="0.0000207 0.0000234 0.0000146 -0.0000004 0.0000002 0.0000001"/>
+          <geom class="visual" mesh="FR_hip" material="leg_material"/>
+          <geom class="collision" type="box" pos="-0.026 -0.006 -0.01" size="0.02175 0.021 0.02825"/>
+
+          <body name="FR_thigh" pos="-0.02585 -0.024 -0.01">
+            <joint name="FR_thigh_joint" axis="0 1 0" range="-1.0471975512 4.18879020479" class="sts3215"/>
+            <inertial pos="0.001738 -0.0320053 -0.0336023" mass="0.1351927"
+              fullinertia="0.0002128 0.0001953 0.0000461 -0.0000023 -0.0000185 0.0000224"/>
+            <geom class="visual" mesh="FR_thigh" material="leg_material"/>
+            <geom class="collision" type="box" pos="0.03 -0.034 -0.033" size="0.01 0.0065 0.05568"/>
+
+            <body name="FR_calf" pos="0.03 -0.0081 -0.10725">
+              <joint name="FR_calf_joint" axis="0 1 0" range="-2.6965336943 -0.916297857297" class="sts3215"/>
+              <inertial pos="0.0004209 -0.0271693 -0.0219402" mass="0.0993956"
+                fullinertia="0.0001117 0.0001086 0.000013 0.0000001 -0.0000033 -0.0000012"/>
+              <geom class="visual" mesh="FR_calf" material="leg_material"/>
+              <geom class="collision" type="box" pos="0 -0.026 -0.046" size="0.0045 0.0045 0.06"/>
+
+              <body name="FR_foot" pos="-0.00009305 -0.0261 -0.1184">
+                <inertial pos="-0.0065101 0 -0.0064928" mass="0.006"
+                  fullinertia="0.0000008 0.0000008 0.0000008 0 -0.0000002 0"/>
+                <geom class="visual" mesh="FR_foot" material="foot_material"/>
+                <geom class="collision" type="sphere" size="0.02" name="FR_foot_bottom_tpu"/>
+                <site name="FR_foot"/>
+              </body>
+            </body>
+          </body>
+        </body>
+
+        <body name="FL_hip" pos="0.1305 0.03877 0.019">
+          <joint name="FL_hip_joint" axis="1 0 0" range="-0.802851455917 0.802851455917" class="sts3215"/>
+          <inertial pos="-0.0267598 0.0023151 -0.0095722" mass="0.0843956"
+            fullinertia="0.0000207 0.0000235 0.0000146 0.0000004 0.0000002 -0.0000001"/>
+          <geom class="visual" mesh="FL_hip" material="leg_material"/>
+          <geom class="collision" type="box" pos="-0.026 0.006 -0.01" size="0.02175 0.021 0.02825"/>
+
+          <body name="FL_thigh" pos="-0.02585 0.024 -0.010445">
+            <joint name="FL_thigh_joint" axis="0 1 0" range="-1.0471975512 4.18879020479" class="sts3215"/>
+            <inertial pos="0.001738 0.0320052 -0.0336023" mass="0.1351927"
+              fullinertia="0.0002128 0.0001953 0.0000461 0.0000023 -0.0000185 -0.0000224"/>
+            <geom class="visual" mesh="FL_thigh" material="leg_material"/>
+            <geom class="collision" type="box" pos="0.03 0.034 -0.033" size="0.01 0.0065 0.05568"/>
+
+            <body name="FL_calf" pos="0.03 0.0081 -0.107">
+              <joint name="FL_calf_joint" axis="0 1 0" range="-2.6965336943 -0.916297857297" class="sts3215"/>
+              <inertial pos="0.0004209 0.0271693 -0.022031" mass="0.0993956"
+                fullinertia="0.0001121 0.000109 0.000013 -0.0000001 -0.0000033 0.0000011"/>
+              <geom class="visual" mesh="FL_calf" material="leg_material"/>
+              <geom class="collision" type="box" pos="0 0.026 -0.046" size="0.0045 0.0045 0.06"/>
+
+              <body name="FL_foot" pos="-0.00009305 0.0261 -0.11865">
+                <inertial pos="-0.0065101 0 -0.0064928" mass="0.006"
+                  fullinertia="0.0000008 0.0000008 0.0000008 0 -0.0000002 0"/>
+                <geom class="visual" mesh="FL_foot" material="foot_material"/>
+                <geom class="collision" type="sphere" size="0.02" name="FL_foot_bottom_tpu"/>
+                <site name="FL_foot"/>
+              </body>
+            </body>
+          </body>
+        </body>
+
+        <body name="RR_hip" pos="-0.1305 -0.03877 0.019">
+          <joint name="RR_hip_joint" axis="1 0 0" range="-0.802851455917 0.802851455917" class="sts3215"/>
+          <inertial pos="0.0267597 -0.0023151 -0.0094611" mass="0.0843956"
+            fullinertia="0.0000207 0.0000234 0.0000146 0.0000004 0.0000002 0.0000001"/>
+          <geom class="visual" mesh="RR_hip" material="leg_material"/>
+          <geom class="collision" type="box" pos="0.026 -0.006 -0.01" size="0.02175 0.021 0.02825"/>
+
+          <body name="RR_thigh" pos="0.02585 -0.024 -0.01">
+            <joint name="RR_thigh_joint" axis="0 1 0" range="-1.0471975512 4.18879020479" class="sts3215"/>
+            <inertial pos="0.001738 -0.0320053 -0.0336023" mass="0.1351927"
+              fullinertia="0.0002128 0.0001953 0.0000461 -0.0000023 -0.0000185 0.0000224"/>
+            <geom class="visual" mesh="RR_thigh" material="leg_material"/>
+            <geom class="collision" type="box" pos="0.03 -0.034 -0.033" size="0.01 0.0065 0.05568"/>
+
+            <body name="RR_calf" pos="0.03 -0.0081 -0.10725">
+              <joint name="RR_calf_joint" axis="0 1 0" range="-2.6965336943 -0.916297857297" class="sts3215"/>
+              <inertial pos="0.0004209 -0.0271693 -0.0219402" mass="0.0993956"
+                fullinertia="0.0001117 0.0001086 0.000013 0.0000001 -0.0000033 -0.0000012"/>
+              <geom class="visual" mesh="RR_calf" material="leg_material"/>
+              <geom class="collision" type="box" pos="0 -0.026 -0.046" size="0.0045 0.0045 0.06"/>
+
+              <body name="RR_foot" pos="-0.00009305 -0.0261 -0.1184">
+                <inertial pos="-0.0065101 0 -0.0064928" mass="0.006"
+                  fullinertia="0.0000008 0.0000008 0.0000008 0 -0.0000002 0"/>
+                <geom class="visual" mesh="RR_foot" material="foot_material"/>
+                <geom class="collision" type="sphere" size="0.02" name="RR_foot_bottom_tpu"/>
+                <site name="RR_foot"/>
+              </body>
+            </body>
+          </body>
+        </body>
+
+        <body name="RL_hip" pos="-0.1305 0.03923 0.019">
+          <joint name="RL_hip_joint" axis="1 0 0" range="-0.802851455917 0.802851455917" class="sts3215"/>
+          <inertial pos="0.0267597 0.0023151 -0.0094611" mass="0.0843956"
+            fullinertia="0.0000207 0.0000234 0.0000146 -0.0000004 0.0000002 -0.0000001"/>
+          <geom class="visual" mesh="RL_hip" material="leg_material"/>
+          <geom class="collision" type="box" pos="0.026 0.006 -0.01" size="0.02175 0.021 0.02825"/>
+
+          <body name="RL_thigh" pos="0.02585 0.024 -0.01">
+            <joint name="RL_thigh_joint" axis="0 1 0" range="-1.0471975512 4.18879020479" class="sts3215"/>
+            <inertial pos="0.001738 0.0320052 -0.0336023" mass="0.1351927"
+              fullinertia="0.0002128 0.0001953 0.0000461 0.0000023 -0.0000185 -0.0000224"/>
+            <geom class="visual" mesh="RL_thigh" material="leg_material"/>
+            <geom class="collision" type="box" pos="0.03 0.034 -0.033" size="0.01 0.0065 0.05568"/>
+
+            <body name="RL_calf" pos="0.03 0.0081 -0.107">
+              <joint name="RL_calf_joint" axis="0 1 0" range="-2.6965336943 -0.916297857297" class="sts3215"/>
+              <inertial pos="0.0004209 0.027169 -0.022031" mass="0.0993956"
+                fullinertia="0.0001121 0.000109 0.000013 -0.0000001 -0.0000033 0.0000011"/>
+              <geom class="visual" mesh="RL_calf" material="leg_material"/>
+              <geom class="collision" type="box" pos="0 0.026 -0.046" size="0.0045 0.0045 0.06"/>
+
+              <body name="RL_foot" pos="-0.00009305 0.0261 -0.11865">
+                <inertial pos="-0.0065101 0 -0.0064928" mass="0.006"
+                  fullinertia="0.0000008 0.0000008 0.0000008 0 -0.0000002 0"/>
+                <geom class="visual" mesh="RL_foot" material="foot_material"/>
+                <geom class="collision" type="sphere" size="0.02" name="RL_foot_bottom_tpu"/>
+                <site name="RL_foot"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <gyro site="imu" name="gyro"/>
+    <velocimeter site="imu" name="local_linvel"/>
+    <accelerometer site="imu" name="accelerometer"/>
+    <framezaxis objtype="site" objname="imu" name="upvector"/>
+    <framexaxis objtype="site" objname="imu" name="forwardvector"/>
+    <framelinvel objtype="site" objname="imu" name="global_linvel"/>
+    <frameangvel objtype="site" objname="imu" name="global_angvel"/>
+    <framepos objtype="site" objname="imu" name="position"/>
+    <framequat objtype="site" objname="imu" name="orientation"/>
+    <framelinvel objtype="site" objname="FR_foot" name="FR_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="FL_foot" name="FL_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="RR_foot" name="RR_foot_global_linvel"/>
+    <framelinvel objtype="site" objname="RL_foot" name="RL_foot_global_linvel"/>
+    <framexaxis objtype="site" objname="FL_foot" name="FL_foot_upvector"/>
+    <framexaxis objtype="site" objname="FR_foot" name="FR_foot_upvector"/>
+    <framexaxis objtype="site" objname="RR_foot" name="RR_foot_upvector"/>
+    <framexaxis objtype="site" objname="RL_foot" name="RL_foot_upvector"/>
+    <framepos objtype="site" objname="FL_foot" name="FL_foot_pos"/>
+    <framepos objtype="site" objname="FR_foot" name="FR_foot_pos"/>
+    <framepos objtype="site" objname="RR_foot" name="RR_foot_pos"/>
+    <framepos objtype="site" objname="RL_foot" name="RL_foot_pos"/>
+  </sensor>
+
+  <asset>
+    <mesh name="trunk" file="trunk.STL"/>
+    <mesh name="FR_hip" file="FR_hip.STL"/>
+    <mesh name="FR_thigh" file="FR_thigh.STL"/>
+    <mesh name="FR_calf" file="FR_calf.STL"/>
+    <mesh name="FR_foot" file="FR_foot.STL"/>
+    <mesh name="FL_hip" file="FL_hip.STL"/>
+    <mesh name="FL_thigh" file="FL_thigh.STL"/>
+    <mesh name="FL_calf" file="FL_calf.STL"/>
+    <mesh name="FL_foot" file="FL_foot.STL"/>
+    <mesh name="RR_hip" file="RR_hip.STL"/>
+    <mesh name="RR_thigh" file="RR_thigh.STL"/>
+    <mesh name="RR_calf" file="RR_calf.STL"/>
+    <mesh name="RR_foot" file="RR_foot.STL"/>
+    <mesh name="RL_hip" file="RL_hip.STL"/>
+    <mesh name="RL_thigh" file="RL_thigh.STL"/>
+    <mesh name="RL_calf" file="RL_calf.STL"/>
+    <mesh name="RL_foot" file="RL_foot.STL"/>
+
+    <material name="trunk_material" rgba="0.75 0.75 0.78 1"/>
+    <material name="leg_material" rgba="0.42 0.42 0.45 1"/>
+    <material name="foot_material" rgba="0.18 0.18 0.2 1"/>
+  </asset>
+
+  <actuator>
+    <position class="sts3215" joint="FR_hip_joint" name="FR_hip_joint" inheritrange="1"/>
+    <position class="sts3215" joint="FR_thigh_joint" name="FR_thigh_joint" inheritrange="1"/>
+    <position class="sts3215" joint="FR_calf_joint" name="FR_calf_joint" inheritrange="1"/>
+    <position class="sts3215" joint="FL_hip_joint" name="FL_hip_joint" inheritrange="1"/>
+    <position class="sts3215" joint="FL_thigh_joint" name="FL_thigh_joint" inheritrange="1"/>
+    <position class="sts3215" joint="FL_calf_joint" name="FL_calf_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RR_hip_joint" name="RR_hip_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RR_thigh_joint" name="RR_thigh_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RR_calf_joint" name="RR_calf_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RL_hip_joint" name="RL_hip_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RL_thigh_joint" name="RL_thigh_joint" inheritrange="1"/>
+    <position class="sts3215" joint="RL_calf_joint" name="RL_calf_joint" inheritrange="1"/>
+  </actuator>
+
+  <equality/>
+</mujoco>

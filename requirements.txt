@@ -1,0 +1,36 @@
+# Reference environment: conda env `dog_m`
+# Captured from /root/miniconda3/envs/dog_m on 2026-05-03.
+# Python version in that environment: 3.12.13
+#
+# Notes:
+# - This file mirrors the package versions currently installed in `dog_m`.
+# - `playground==0.0.5` provides the `mujoco_playground` module imported by this repo.
+# - The JAX entries below are the CUDA 12 GPU build used on this machine.
+
+absl-py==2.4.0
+brax==0.14.2
+etils==1.14.0
+flax==0.12.6
+framesviewer==1.1.0
+jax==0.9.2
+jax-cuda12-pjrt==0.9.2
+jax-cuda12-plugin==0.9.2
+jaxlib==0.9.2
+jaxtyping==0.3.9
+lxml==6.0.2
+matplotlib==3.10.8
+mediapy==1.2.6
+ml-collections==1.1.0
+mujoco==3.6.0
+mujoco-mjx==3.6.0
+numpy==2.4.4
+onnx==1.21.0
+onnxruntime==1.24.4
+playground==0.0.5
+pygame==2.6.1
+scipy==1.17.1
+tensorboard==2.20.0
+tensorboardX==2.6.4
+tensorflow==2.21.0
+tf2onnx==1.17.0
+tqdm==4.67.3
