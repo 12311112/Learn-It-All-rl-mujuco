@@ -1,0 +1,179 @@
+Metadata-Version: 2.4
+Name: dog-playground
+Version: 0.1.0
+Summary: MuJoCo + JAX dog locomotion playground with training, ONNX export, and inference tools.
+Author: Ma Zhenxuan
+License: MIT License
+        
+        Copyright (c) 2026 Ma Zhenxuan
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: absl-py==2.4.0
+Requires-Dist: brax==0.14.2
+Requires-Dist: etils==1.14.0
+Requires-Dist: flax==0.12.6
+Requires-Dist: framesviewer==1.1.0
+Requires-Dist: jax==0.9.2
+Requires-Dist: jax-cuda12-pjrt==0.9.2
+Requires-Dist: jax-cuda12-plugin==0.9.2
+Requires-Dist: jaxlib==0.9.2
+Requires-Dist: jaxtyping==0.3.9
+Requires-Dist: lxml==6.0.2
+Requires-Dist: matplotlib==3.10.8
+Requires-Dist: mediapy==1.2.6
+Requires-Dist: ml-collections==1.1.0
+Requires-Dist: mujoco==3.6.0
+Requires-Dist: mujoco-mjx==3.6.0
+Requires-Dist: numpy==2.4.4
+Requires-Dist: onnx==1.21.0
+Requires-Dist: onnxruntime==1.24.4
+Requires-Dist: playground==0.0.5
+Requires-Dist: pygame==2.6.1
+Requires-Dist: scipy==1.17.1
+Requires-Dist: tensorboard==2.20.0
+Requires-Dist: tensorboardX==2.6.4
+Requires-Dist: tensorflow==2.21.0
+Requires-Dist: tf2onnx==1.17.0
+Requires-Dist: tqdm==4.67.3
+Dynamic: license-file
+
+# Dog Playground
+
+MuJoCo + JAX based dog locomotion playground for training, ONNX export, and local inference.
+
+## What is included
+
+- `playground/dog_m/runner.py`: training entrypoint
+- `playground/dog_m/joystick.py`: locomotion task
+- `playground/dog_m/mujoco_infer.py`: run an exported ONNX policy in MuJoCo
+- `playground/dog_m/imu_axis_probe.py`: inspect IMU axis conventions in the simulator
+- `playground/common/`: shared training, export, reward, and utility code
+- `playground/dog_m/xmls/`: robot and scene assets
+- `models/best.onnx`: bundled ready-to-run ONNX policy
+
+
+## Reference environment
+
+This repository is now aligned to the local conda environment `dog_m` on this machine.
+
+- Conda env name: `dog_m`
+- Python: `3.12.13`
+- JAX: `0.9.2`
+- `jaxlib`: `0.9.2`
+- `jax-cuda12-pjrt`: `0.9.2`
+- `jax-cuda12-plugin`: `0.9.2`
+- MuJoCo: `3.6.0`
+- `mujoco-mjx`: `3.6.0`
+- `playground` (provides `mujoco_playground`): `0.0.5`
+- TensorFlow: `2.21.0`
+- `tf2onnx`: `1.17.0`
+
+## Setup
+
+### 1. Recreate the exact `dog_m` conda environment
+
+```bash
+cd /root/dog_sim/Dog_Playground
+conda env create -f environment.yml
+conda activate dog_m
+```
+
+If `dog_m` already exists, update it in place:
+
+```bash
+conda env update -n dog_m -f environment.yml --prune
+conda activate dog_m
+```
+
+### 2. Alternative: install the pinned packages into an existing env
+
+```bash
+conda create -n dog_m python=3.12.13
+conda activate dog_m
+pip install -r requirements.txt
+```
+
+### 3. Platform note
+
+The current `dog_m` environment is a CUDA 12 GPU environment because it uses:
+
+- `jax-cuda12-pjrt==0.9.2`
+- `jax-cuda12-plugin==0.9.2`
+
+If you want a CPU-only environment, replace those two packages with a CPU-compatible JAX install before running the project.
+
+## Quick start Train and export ONNX
+
+```bash
+python playground/dog_m/runner.py 
+```
+
+### Run the exported policy in MuJoCo
+
+```bash
+python playground/dog_m/mujoco_infer.py \
+  -o outputs/<your_policy>.onnx 
+```
+
+### Run the bundled ONNX directly
+
+```bash
+python playground/dog_m/mujoco_infer.py \
+  -o models/best.onnx 
+```
+
+Use this command if you want to verify the repository immediately without training first.
+
+Keyboard controls in the inference viewer:
+
+- Up/Down: forward/backward command
+- Left/Right: lateral command
+- `A` / `E`: yaw command
+
+## Demo videos
+
+<div align="center">
+
+  <video src="https://github.com/user-attachments/assets/cafc08f6-3ca6-4018-8375-37cb2e9bd252" 
+         controls 
+         width="80%">
+  </video>
+
+  <p><b>Full-stack Embodied AI Quadruped Robot Demo</b></p>
+  <p>
+    A low-cost open-source quadruped robot pipeline covering mechanical design,
+    simulation, reinforcement learning, IK control, and deployment.
+  </p>
+
+</div>
+
+
+### IMU axis probe
+
+```bash
+python playground/dog_m/imu_axis_probe.py \
+  --model_path playground/dog_m/xmls/scene_flat_terrain.xml
+```
+
+This tool helps verify roll, pitch, yaw, gyro, and accelerometer conventions.
+
