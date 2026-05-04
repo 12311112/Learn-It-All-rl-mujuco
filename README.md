@@ -19,7 +19,7 @@ MuJoCo + JAX based dog locomotion playground for training, ONNX export, and loca
 ### 1. Recreate the exact `dog_m` conda environment
 
 ```bash
-cd /root/dog_sim/Dog_Playground
+cd Learn-It-All-rl-mujoco
 conda env create -f environment.yml
 conda activate dog_m
 ```
