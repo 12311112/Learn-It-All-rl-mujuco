@@ -15,21 +15,6 @@ MuJoCo + JAX based dog locomotion playground for training, ONNX export, and loca
 
 ## Reference environment
 
-This repository is now aligned to the local conda environment `dog_m` on this machine.
-
-- Conda env name: `dog_m`
-- Python: `3.12.13`
-- JAX: `0.9.2`
-- `jaxlib`: `0.9.2`
-- `jax-cuda12-pjrt`: `0.9.2`
-- `jax-cuda12-plugin`: `0.9.2`
-- MuJoCo: `3.6.0`
-- `mujoco-mjx`: `3.6.0`
-- `playground` (provides `mujoco_playground`): `0.0.5`
-- TensorFlow: `2.21.0`
-- `tf2onnx`: `1.17.0`
-
-## Setup
 
 ### 1. Recreate the exact `dog_m` conda environment
 
@@ -38,6 +23,7 @@ cd /root/dog_sim/Dog_Playground
 conda env create -f environment.yml
 conda activate dog_m
 ```
+That's a GPU environment
 
 If `dog_m` already exists, update it in place:
 
@@ -45,23 +31,6 @@ If `dog_m` already exists, update it in place:
 conda env update -n dog_m -f environment.yml --prune
 conda activate dog_m
 ```
-
-### 2. Alternative: install the pinned packages into an existing env
-
-```bash
-conda create -n dog_m python=3.12.13
-conda activate dog_m
-pip install -r requirements.txt
-```
-
-### 3. Platform note
-
-The current `dog_m` environment is a CUDA 12 GPU environment because it uses:
-
-- `jax-cuda12-pjrt==0.9.2`
-- `jax-cuda12-plugin==0.9.2`
-
-If you want a CPU-only environment, replace those two packages with a CPU-compatible JAX install before running the project.
 
 ## Quick start Train and export ONNX
 
